@@ -47,7 +47,7 @@ export const Login = () => {
         e.preventDefault()
     }
 
-
+    const name = 'Tanvir'
     const googleProvider = new GoogleAuthProvider();
     const googleSignIn = () => {
         signInWithPopup(auth, googleProvider)
