@@ -1,5 +1,6 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
+import app from '../../firebase.config';
 import './Login.css';
 export const Login = () => {
 
@@ -8,17 +9,30 @@ export const Login = () => {
         email: '',
         password: '',
     });
+    const [newUser, setNewUser] = useState(false)
 
-
+    console.log(newUser);
     const handleSubmit = () => {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, user.email, user.password)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        const auth = getAuth(app);
+        if (newUser) {
+            createUserWithEmailAndPassword(auth, user.email, user.password)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }
+        if (!newUser) {
+            signInWithEmailAndPassword(auth, user.email, user.password)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                });
+        }
     }
 
 
@@ -44,15 +58,15 @@ export const Login = () => {
                 <div><h1 className=' text-xl font-bold'>Create an account</h1></div>
                 <div>
                     <label for=" htmlfor">NewUser</label>
-                    <input className=' cursor-pointer' type="checkbox" name="" />
+                    <input onChange={() => setNewUser(!newUser)} className=' cursor-pointer' type="checkbox" name="" />
                     <from className='space-y-10'>
-                        <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='Name' type="name" name="name" />
+                        {newUser && <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='Name' type="name" name="name" />}
                         <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='Username or Email' type="email" name="email" />
                         <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='password' type="password" name="password" />
 
 
                         <input className='block px-20 border-b focus:outline-none' placeholder='Confirm Pasword' type="password" name="password" />
-                        <input onClick={handleSubmit} className='block cursor-pointer focus:outline-none' type="submit" name="password" value="Create an account" />
+                        <input onClick={handleSubmit} className=' text-center block cursor-pointer focus:outline-none' type="button" name="password" value={newUser ? "Create an account" : "Login "} />
                     </from>
                 </div>
             </div>
