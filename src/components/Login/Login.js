@@ -53,23 +53,15 @@ export const Login = () => {
         }
     }
     return (
-        <div className=' flex justify-center items-center p-16 '>
-            <div className=' space-y-20 '>
-                <div><h1 className=' text-xl font-bold'>Create an account</h1></div>
+        <section className=' bg-gray-100 flex min-h-screen items-center justify-center'>
+            <div>
                 <div>
-                    <label for=" htmlfor">NewUser</label>
-                    <input onChange={() => setNewUser(!newUser)} className=' cursor-pointer' type="checkbox" name="" />
-                    <from className='space-y-10'>
-                        {newUser && <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='Name' type="name" name="name" />}
-                        <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='Username or Email' type="email" name="email" />
-                        <input onBlur={handleBlur} className='block px-20 border-b focus:outline-none' placeholder='password' type="password" name="password" />
-
-
-                        <input className='block px-20 border-b focus:outline-none' placeholder='Confirm Pasword' type="password" name="password" />
-                        <input onClick={handleSubmit} className=' text-center block cursor-pointer focus:outline-none' type="button" name="password" value={newUser ? "Create an account" : "Login "} />
-                    </from>
+                    <h1>hello world</h1>
+                </div>
+                <div>
+                    <img src="../../images/image.avif" alt="" />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
