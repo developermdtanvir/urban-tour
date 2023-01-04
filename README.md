@@ -5,3 +5,4 @@
         *Private Routing 
         *Dynamic Routing
         *Firebase 
+        * Create Email and Password
