@@ -1,0 +1,25 @@
+[{
+    "id": 1,
+    "name": "Bike",
+    "price": "300",
+    "detailInfo": "221.238.131.97",
+    "img":"https://imgd.aeplcdn.com/370x208/n/cw/ec/49720/tvs-apache-rr-310-right-side13.jpeg?q=75"
+  }, {
+    "id": 2,
+    "name": "Car",
+    "price": "900",
+    "detailInfo": "250.118.180.174",
+    "img":"https://img.freepik.com/free-vector/modern-blue-urban-adventure-suv-vehicle-illustration_1344-205.jpg?w=2000"
+  }, {
+    "id": 3,
+    "name": "Bus",
+    "price": "200",
+    "detailInfo": "14.193.63.125",
+    "img":"https://media.istockphoto.com/id/135327019/photo/white-passenger-bus.jpg?s=612x612&w=0&k=20&c=sRU5BpOsY6fyYj9pMiAxz0dLML--uoNl7rIXelRbFnc="
+  }, {
+    "id": 4,
+    "name": "Tranin",
+    "price": "100",
+    "detailInfo": "51.2.102.25",
+    "img":"https://www.shutterstock.com/image-vector/red-train-transportation-vector-illustration-260nw-1804097230.jpg"
+  }]

@@ -1,18 +1,24 @@
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../App';
 import app from '../../firebase.config';
 import img from '../../images/image.avif';
 import './Login.css';
 export const Login = () => {
-
+    const [userInfo, setUserInfo] = useContext(UserContext)
     const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
         isLogin: false,
-        success: ''
+        success: false
     });
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const redirectRoute = location.state?.path || '/';
     const [newUser, setNewUser] = useState(false)
 
     console.log(newUser);
@@ -24,6 +30,15 @@ export const Login = () => {
             createUserWithEmailAndPassword(auth, user.email, user.password)
                 .then(res => {
                     console.log(res);
+                    const { displayName, email } = res.user;
+                    const newUserInfo = { ...user };
+                    newUserInfo.name = displayName
+                    newUserInfo.email = email
+                    newUserInfo.success = true
+                    newUserInfo.error = ''
+                    setUser(newUserInfo)
+                    setUserInfo(newUserInfo);
+                    navigate(redirectRoute, { replace: true })
                 })
                 .catch(error => {
                     console.log(error)
@@ -32,9 +47,15 @@ export const Login = () => {
         if (!newUser) {
             signInWithEmailAndPassword(auth, user.email, user.password)
                 .then(res => {
+                    const { displayName } = res.user;
                     const newUser = { ...user };
                     newUser.isLogin = true;
+                    newUser.name = displayName
+                    newUser.success = true
+                    newUser.error = ''
                     setUser(newUser);
+                    setUserInfo(newUser);
+                    navigate(redirectRoute, { replace: true })
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -56,9 +77,14 @@ export const Login = () => {
                 let newUsrInfo = { ...user };
                 newUsrInfo.name = displayName;
                 newUsrInfo.email = email;
+                newUsrInfo.success = true
                 setUser(newUsrInfo);
+                setUserInfo(newUsrInfo);
+                navigate(redirectRoute, { replace: true })
+
             }).catch(error => {
                 console.log(error)
+
             })
     }
 
@@ -91,6 +117,7 @@ export const Login = () => {
     }
     return (
         <section className=' bg-gray-100 flex min-h-screen items-center justify-center'>
+            <p>{user.name}</p>
             <div className=' flex max-w-3xl rounded-lg p-20 bg-cyan-100 shadow-xl '>
                 <div className='md:w-1/2 px-16'>
                     <h2 className=' text-xl text-cyan-400 font-semibold'>Login</h2>
@@ -100,13 +127,15 @@ export const Login = () => {
                     <p>{user.name}</p>
                     <form className=' grid grid-row-4 gap-6 mt-8'>
                         {newUser && <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Name' type="text" name="name" />}
-                        <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Password' type="password" name="password" />
                         <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='email' type="email" name="email" />
+                        <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Password' type="password" name="password" />
                         <input onClick={handleSubmit} className=' p-2 bg-cyan-700 rounded-md text-white hover:scale-110 duration-500 cursor-pointer' type="submit" name="" value={user.isLogin ? 'LogOut' : 'Login'} />
                     </form>
-                    {user.isLogin ? <button onClick={signout} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login out  Google</button> : <button onClick={googleSignIn} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login in Google</button>}
+                    {user.isLogin ? <button onClick={signout} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login out  Google</button> : <button onClick={googleSignIn} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login with   Google</button>}
+
 
                     <p className=' text-red-600'>{user.success}</p>
+                    {user.success && <p className=' text-green-500'> User {newUser ? 'Created' : 'Login'} successfylly</p>}
                 </div>
                 <div className='w-1/2 md:block hidden'>
                     <img className=' rounded-md' src={img} alt="" />
