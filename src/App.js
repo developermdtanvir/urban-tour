@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { DetailPricing } from './components/DetailPricing/DetailPricing';
+import { Destination } from './components/Destination/Destination';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Login/Login';
 import { Navigation } from './components/Navigation/Navigation';
@@ -24,7 +24,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home travle={travle} />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/detail/:id' element={<PrivetRoute><DetailPricing /></PrivetRoute>} />
+          <Route path='/destination' element={<PrivetRoute><Destination /></PrivetRoute>} />
+          <Route path='/destination/:id' element={<PrivetRoute><Destination /></PrivetRoute>} />
         </Routes>
       </Router>
     </UserContext.Provider>
