@@ -7,6 +7,7 @@ import app from '../../firebase.config';
 import img from '../../images/image.avif';
 import './Login.css';
 export const Login = () => {
+
     const [userInfo, setUserInfo] = useContext(UserContext)
     const [user, setUser] = useState({
         name: '',
@@ -122,17 +123,17 @@ export const Login = () => {
                 <div className='md:w-1/2 px-16'>
                     <h2 className=' text-xl text-cyan-400 font-semibold'>Login</h2>
                     <p className=' text-cyan-300'>if you Already a Mumber easy login in </p>
-                    <label for="">New User</label>
-                    <input type="checkbox" name="" onChange={() => setNewUser(!newUser)} />
                     <p>{user.name}</p>
                     <form className=' grid grid-row-4 gap-6 mt-8'>
                         {newUser && <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Name' type="text" name="name" />}
-                        <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='email' type="email" name="email" />
+                        <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Email' type="email" name="email" />
                         <input onBlur={handleBlur} className='p-2 rounded-xl outline-cyan-800' placeholder='Password' type="password" name="password" />
                         <input onClick={handleSubmit} className=' p-2 bg-cyan-700 rounded-md text-white hover:scale-110 duration-500 cursor-pointer' type="submit" name="" value={user.isLogin ? 'LogOut' : 'Login'} />
                     </form>
                     {user.isLogin ? <button onClick={signout} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login out  Google</button> : <button onClick={googleSignIn} className='hover:scale-110 duration-500 cursor-pointer mt-10 flex justify-center items-center py-2 bg-white rounded '><FcGoogle className=' mr-2' />Login with   Google</button>}
-
+                    <div>
+                        <p>Al ready have an account</p><a onClick={() => setNewUser(!newUser)} href='#' className=' cursor-pointer text-red-500 underline' >{newUser ? 'Login' : 'create an account'}</a>
+                    </div>
 
                     <p className=' text-red-600'>{user.success}</p>
                     {user.success && <p className=' text-green-500'> User {newUser ? 'Created' : 'Login'} successfylly</p>}

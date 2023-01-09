@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export const Destination = () => {
 
 
+  const [pick, setPick] = useState();
+  console.log(pick);
+  const { id } = useParams();
+  console.log(id);
+
   const handleBlur = (e) => {
-    console.log(e.target.value);
+    setPick(e.target.value)
 
   }
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
 
+    e.preventDefault()
   }
   return (
     <div className=' max-w-screen pt-10 grid md:grid-cols-2'>
@@ -17,11 +24,11 @@ export const Destination = () => {
           <div className=' space-y-10'>
             <div className=' space-y-5'>
               <p className=' text-lg font-semibold'>Pick From </p>
-              <input onBlur={handleBlur} className=' px-10 py-2' type="" name="" />
+              <input className=' px-10 py-2 outline-orange-500' type="" name="" />
             </div>
             <div>
               <p className=' text-lg font-semibold'>Pick To</p>
-              <input onBlur={handleBlur} className=' px-10 py-2' type="" name="" />
+              <input className=' px-10 py-2 outline-orange-500' type="" name="" />
             </div>
             <input className=' bg-orange-500 px-20 cursor-pointer  py-2 text-lg font-semibold text-white rounded' type='submit' value='submit' onClick={handleSubmit} />
           </div>
